@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Converter</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .converter-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out forwards;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .converter {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 10px auto;
+        width: 100%; 
+      }
+
+      .converter input,
+      .converter select,
+      .converter button {
+        padding: 12px 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        margin: 5px;
+       
+        width: 100%; 
+      }
+
+      .converter select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: url("https://www.w3schools.com/howto/howto_css_arrows.asp")
+          no-repeat 98% center;
+      }
+
+      #result {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        color: #2196f3;
+        width: 100%;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="converter-container">
+      <h1>Temperature Converter</h1>
+      <div class="converter">
+        <input type="number" id="tempInput" placeholder="Enter Temperature" />
+        <select id="inputUnit">
+          <option value="celsius">Celsius</option>
+          <option value="fahrenheit">Fahrenheit</option>
+          <option value="kelvin">Kelvin</option>
+        </select>
+        <button onclick="convertTemp()">Convert</button>
+      </div>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      const tl = gsap.timeline();
+
+      function convertTemp() {
+        const tempValue = document.getElementById("tempInput").value;
+        const inputUnit = document.getElementById("inputUnit").value;
+        const outputUnit = document.getElementById("result");
+
+        if (tempValue === "") {
+          outputUnit.textContent = "Please enter a temperature.";
+          return;
+        }
+
+        let convertedTemp;
+       
+        if (inputUnit === "celsius") {
+          convertedTemp = (tempValue * 9) / 5 + 32; 
+          outputUnit.textContent = `${tempValue}°C is equal to ${convertedTemp.toFixed(
+            2
+          )}°F`;
+        } else if (inputUnit === "fahrenheit") {
+          convertedTemp = ((tempValue - 32) * 5) / 9;
+          outputUnit.textContent = `${tempValue}°F is equal to ${convertedTemp.toFixed(
+            2
+          )}°C`;
+        } else if (inputUnit === "kelvin") {
+          convertedTemp = tempValue - 273.15; 
+          outputUnit.textContent = `${tempValue}°K is equal to ${convertedTemp.toFixed(
+            2
+          )}°C`;
+          convertedTemp = ((tempValue - 273.15) * 9) / 5 + 32; 
+          outputUnit.textContent += ` and ${convertedTemp.toFixed(2)}°F`;
+        } else {
+          outputUnit.textContent = "Invalid unit selected.";
+        }
+      }
+    </script>
+  </body>
+</html>
